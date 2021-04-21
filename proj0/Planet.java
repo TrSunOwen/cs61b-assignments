@@ -68,4 +68,18 @@ public class Planet {
         return yForce;
     }
 
+    public void update(double dt, double fX, double fY) {
+        xxVel = xxVel + (dt * fX /this.mass);
+        yyVel = yyVel + (dt * fY/this.mass);
+
+        xxPos = xxPos + dt * xxVel;
+        yyPos = yyPos + dt * yyVel;
+    }
+
+    /** Draw One Planet */
+    /** uses the StdDraw API mentioned above to draw the Planet’s image at the Planet’s position.
+     * The draw method should return nothing and take in no parameters. */
+    public void draw(){
+        StdDraw.picture(xxPos, yyPos, "images/" + imgFileName);
+    }
 }
