@@ -154,12 +154,19 @@ public class LinkedListDeque<T> {
 
     /** Same as get, but use recursion. */
     public T getRecursive(int index) {
-        return null;
+        /** Create a pointer pointing at the first node. */
+        Node p = sentinel.next;
+        /** Call the getRecursiveHelper() function. */
+        return getRecursiveHelper(index, p);
     }
 
-    /** get() by Recursion. This is the helper function. */
-    public T getRecursiveHelper(int index) {
-        return null;
+    /** getRecursive() by Recursion. This is the helper function. */
+    public T getRecursiveHelper(int index, Node p) {
+        if (index == 0) { /** The basic case */
+            return p.item;
+        }
+        index = index - 1;
+        return getRecursiveHelper(index, p.next);
     }
 
     /** Print the items in the deque from first to last, separated by a space. */
@@ -170,15 +177,22 @@ public class LinkedListDeque<T> {
             System.out.print(p.item);
             System.out.print(" ");
         }
+        /** Print finished. Create a new line.
+         * Just for convenience. */
+        System.out.println(" ");
     }
 
-//    public static void main(String[] args) {
-//        LinkedListDeque<Integer> L = new LinkedListDeque<>(3);
-//        L.addFirst(2);
-//        L.addFirst(1);
-//        L.addLast(4);
-//        L.addLast(3);
-//        System.out.println(L.get(3));
-//        L.printDeque();
-//    }
+    public static void main(String[] args) {
+        LinkedListDeque<Integer> L = new LinkedListDeque<>(3);
+        L.addFirst(2);
+        L.addFirst(1);
+        L.addLast(4);
+        L.addLast(3);
+
+        System.out.println(L.get(3));
+        L.printDeque();
+
+        L.getRecursive(4);
+        System.out.println(L.getRecursive(4));
+    }
 }
