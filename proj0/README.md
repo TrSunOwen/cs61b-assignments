@@ -12,6 +12,8 @@
 
 但是通过proj0对这部分有了稍微深入的理解了。
 
+关于更多，参考https://introcs.cs.princeton.edu/java/15inout/。
+
 
 
 总的来说，Proj0很好，虽然工作量不小，但是写完之后收获很大。
