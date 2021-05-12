@@ -14,11 +14,13 @@
 
 但是通过proj0对这部分有了稍微深入的理解了。
 
+关于更多，参考https://introcs.cs.princeton.edu/java/15inout/。
+
 
 
 总的来说，Proj0很好，虽然工作量不小，但是写完之后收获很大。
 
-另外，java visualizer是个很好用的东西。
+另外，java visualizer`是个很好用的东西`。
 
 
 
@@ -37,3 +39,19 @@
 -   每实现一个方法后，检查从sentinel一直next下去看是否回到sentinel，从sentinel一直prev下去看是否回到sentinel。
 -   写双向链表的增删方法时，不能只看一个方向，要双向考虑。
 -   写删除方法时，要考虑链表为空的情况。
+
+
+
+## Proj1b
+
+这个project主要考验Interface的使用，以及简单的assert
+
+我的代码出现的问题是在`Palindrome`中的
+
+```
+private boolean isPalindromeHelper(Deque<String> d,  CharacterComparator cc) 
+```
+
+无法(char)d.removeLast()
+
+非常奇怪
