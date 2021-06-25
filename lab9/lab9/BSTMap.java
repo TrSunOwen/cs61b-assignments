@@ -54,12 +54,12 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         // Comparison between the key and the node's key
         int comp = key.compareTo(p.key);
         if (comp < 0) {
-            getHelper(key, p.left);
+            return getHelper(key, p.left);
+        } else if (comp > 0) {
+            return getHelper(key, p.right);
+        } else {
+            return p.value;
         }
-        if (comp > 0) {
-            getHelper(key, p.right);
-        }
-        return p.value;
     }
 
     /** Returns the value to which the specified key is mapped, or null if this
@@ -84,11 +84,11 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         int comp = key.compareTo(p.key);
         if (comp > 0) {
             p.right = putHelper(key, value, p.right);
-        }
-        if (comp < 0) {
+        } else if (comp < 0) {
             p.left = putHelper(key, value, p.left);
+        } else {
+            p.value = value;
         }
-        p.value = value;
         return p;
     }
 
@@ -147,6 +147,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         b.put(2, "two");
         b.put(7, "seven");
         b.put(1, "one");
-        b.get(1);
+        b.put(3, "three");
+        b.get(3);
+        b.get(7);
     }
 }
