@@ -44,7 +44,22 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      *  or null if this map contains no mapping for the key.
      */
     private V getHelper(K key, Node p) {
-        throw new UnsupportedOperationException();
+        if (key == null) {
+            throw new IllegalArgumentException("calls get() with a null key");
+        }
+        if (p == null) {
+            return null;
+        }
+
+        // Comparison between the key and the node's key
+        int comp = key.compareTo(p.key);
+        if (comp < 0) {
+            getHelper(key, p.left);
+        }
+        if (comp > 0) {
+            getHelper(key, p.right);
+        }
+        return p.value;
     }
 
     /** Returns the value to which the specified key is mapped, or null if this
@@ -52,14 +67,29 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        return getHelper(key, root);
     }
 
     /** Returns a BSTMap rooted in p with (KEY, VALUE) added as a key-value mapping.
       * Or if p is null, it returns a one node BSTMap containing (KEY, VALUE).
      */
     private Node putHelper(K key, V value, Node p) {
-        throw new UnsupportedOperationException();
+        // If empty tree?
+        if (p == null) {
+            size++;
+            return new Node(key, value);
+        }
+
+        // Comparison between the key and the node's key
+        int comp = key.compareTo(p.key);
+        if (comp > 0) {
+            p.right = putHelper(key, value, p.right);
+        }
+        if (comp < 0) {
+            p.left = putHelper(key, value, p.left);
+        }
+        p.value = value;
+        return p;
     }
 
     /** Inserts the key KEY
@@ -67,13 +97,17 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        // If the key is null?
+        if (key == null) {
+            throw new IllegalArgumentException("calls put() with a null key");
+        }
+        root = putHelper(key, value, root);
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
@@ -105,5 +139,14 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     @Override
     public Iterator<K> iterator() {
         throw new UnsupportedOperationException();
+    }
+
+    public static void main(String[] args) {
+        BSTMap<Integer, String> b = new BSTMap<>();
+        b.put(5, "five");
+        b.put(2, "two");
+        b.put(7, "seven");
+        b.put(1, "one");
+        b.get(1);
     }
 }

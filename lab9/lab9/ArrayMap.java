@@ -126,4 +126,17 @@ public class ArrayMap<K, V> implements Map61B<K, V> {
         }
         return returnValue;
     }
+
+    public static void main(String[] args) {
+        ArrayMap<Integer, String> a = new ArrayMap<>();
+        a.put(0, "fff");
+        a.put(2, "eee");
+        a.put(1, "ddd");
+        a.put(1,"ccc");
+        a.remove(2);
+        a.put(6, "bbb");
+        a.put(5, "6");
+        a.put(5, "5");
+        a.remove(4, "bbb");
+    }
 }
