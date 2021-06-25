@@ -74,7 +74,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
       * Or if p is null, it returns a one node BSTMap containing (KEY, VALUE).
      */
     private Node putHelper(K key, V value, Node p) {
-        // If empty tree?
+        // If empty?
         if (p == null) {
             size++;
             return new Node(key, value);
@@ -141,14 +141,4 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         throw new UnsupportedOperationException();
     }
 
-    public static void main(String[] args) {
-        BSTMap<Integer, String> b = new BSTMap<>();
-        b.put(5, "five");
-        b.put(2, "two");
-        b.put(7, "seven");
-        b.put(1, "one");
-        b.put(3, "three");
-        b.get(3);
-        b.get(7);
-    }
 }
