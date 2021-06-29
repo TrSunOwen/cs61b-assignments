@@ -28,7 +28,8 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int leftIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        /** The left child of a node at position n is at position 2n. */
+        return (2 * i);
     }
 
     /**
@@ -36,7 +37,8 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int rightIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        /** The right child of a node at position n is at position 2n + 1. */
+        return (2 * i + 1);
     }
 
     /**
@@ -44,7 +46,8 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int parentIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        /** The parent of a node at position n is at position n/2. */
+        return (i / 2);
     }
 
     /**
@@ -108,7 +111,10 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         /** TODO: Your code here. */
-        return;
+        while (index > 1 && min(index, parentIndex(index)) == index) {
+            swap(index, parentIndex(index));
+            index = parentIndex(index);
+        }
     }
 
     /**
@@ -119,7 +125,13 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         /** TODO: Your code here. */
-        return;
+        /** Finds the smaller of two possible children. */
+        int minIndex = min(leftIndex(index), rightIndex(index));
+        // A recursive way.
+        if (min(index, minIndex) != index) {
+            swap(index, minIndex);
+            sink(minIndex);
+        }
     }
 
     /**
@@ -134,6 +146,14 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         }
 
         /* TODO: Your code here! */
+        /* size+=1 */
+        size = size + 1;
+        /* Marks the index of the added element. */
+        int addedElementIndex = size;
+        contents[size] = new Node(item, priority);
+
+        /* Calls the swim() to put the added element into the proper position. */
+        swim(addedElementIndex);
     }
 
     /**
@@ -143,7 +163,12 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public T peek() {
         /* TODO: Your code here! */
-        return null;
+        if (size() == 0) { /* If empty, returns null. */
+            return null;
+        } else { /* If not empty, returns the item in contents[1].
+        Don't return contents[0], since contents[0] is always set null during the initialization! */
+            return contents[1].item();
+        }
     }
 
     /**
@@ -158,7 +183,28 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public T removeMin() {
         /* TODO: Your code here! */
-        return null;
+        /* Marks the index of the last element. */
+        int lastIndex = size;
+
+        /* T res: the node with the smallest priority value */
+        T res = contents[1].item();
+
+        /* Copies the last element into contents[1]. */
+        contents[1] = contents[lastIndex];
+
+        /* Deletes the last element by turning it into null. */
+        contents[lastIndex] = null;
+
+        /* Calls the sink() function. */
+        int newFirstindex = 1;
+        sink(newFirstindex);
+
+        /* Size: size - 1 */
+        size = size - 1;
+
+        /* Returns the Node with the smallest priority value. */
+        return res;
+
     }
 
     /**
@@ -181,7 +227,24 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public void changePriority(T item, double priority) {
         /* TODO: Your code here! */
-        return;
+        /* Goes through the whole heap to find the node with this specific item! */
+        for (int i = 1; i < size; i++) {
+            if (contents[i].item().equals(item)) {
+                /* Finds out the original value of priority. */
+                double oldPriority = contents[i].priority();
+                /* Updates the value of priority. */
+                contents[i].myPriority = priority;
+
+                /** If the new value of priority is greater than the original value, calls sink().
+                 * Otherwise, calls swim(); */
+                if (oldPriority <= priority) {
+                    sink(i);
+                } else {
+                    swim(i);
+                }
+                break;
+            }
+        }
     }
 
     /**
