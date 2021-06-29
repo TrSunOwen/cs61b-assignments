@@ -55,11 +55,12 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         int comp = key.compareTo(p.key);
         if (comp < 0) {
             return getHelper(key, p.left);
-        } else if (comp > 0) {
-            return getHelper(key, p.right);
-        } else {
-            return p.value;
         }
+        if (comp > 0) {
+            return getHelper(key, p.right);
+        }
+        return p.value;
+
     }
 
     /** Returns the value to which the specified key is mapped, or null if this
@@ -74,7 +75,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
       * Or if p is null, it returns a one node BSTMap containing (KEY, VALUE).
      */
     private Node putHelper(K key, V value, Node p) {
-        // If empty?
+        // If the key-value doesn't exist?
         if (p == null) {
             size++;
             return new Node(key, value);
@@ -140,5 +141,17 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     public Iterator<K> iterator() {
         throw new UnsupportedOperationException();
     }
+
+     public static void main(String[] args) {
+        BSTMap<Integer, String> b = new BSTMap<>();
+        b.put(5, "5");
+        b.put(2, "2");
+        b.put(7, "7");
+        b.put(6, "6");
+        b.put(3, "3");
+        b.put(4, "4");
+        b.put(3, "three");
+        b.get(3);
+     }
 
 }
